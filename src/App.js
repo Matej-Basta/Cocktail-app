@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import Cocktail from "./components/Cocktail";
 import SearchBar from "./components/SearchBar";
 import React, {useState} from "react";
@@ -7,6 +5,7 @@ import React, {useState} from "react";
 
 function App() {
 
+  //accessing the searches and passing them down to cocktail element
   const [search, setSearch] = useState("");
   const [result, setResult] = useState("");
 
