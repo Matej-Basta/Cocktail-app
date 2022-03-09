@@ -5,27 +5,39 @@ function Cocktail({result}) {
     const [cocktail, setCocktail] = useState(null);
     const [cocktailLoaded, setCocktailLoaded] = useState(false);
     const [instructions, setInstructions] = useState("");
+    const [ingredient, setIngredient] = useState([]);
+    const [ingredientLoaded, setIngredientLoaded] = useState(false);
 
     const loadRandomCocktail = async () => {
         const response = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
 
         const data = await response.json();
         
-        console.log(data.drinks[0]);
+        // console.log(data.drinks[0]);
 
         data && setCocktail(data.drinks[0]);
         setCocktailLoaded(true);
       }
 
     const loadSearchedCocktail = async (query) => {
-      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`);
-      const data = await response.json();
+      const response = await fetch();
+      const data = await response.json(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`);
 
-      console.log(data.drinks[0]);
+      // console.log(data);
 
       data && setCocktail(data.drinks[0]);
       setCocktailLoaded(true);
     }
+
+    const loadSearchedIngredient = async (query) => {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${query}`);
+      const data = await response.json();
+
+      console.log(data.drinks);
+
+      data && setIngredient(data.drinks);
+      setIngredientLoaded(true);
+    } 
     
     useEffect(() => {
 
@@ -33,7 +45,7 @@ function Cocktail({result}) {
         loadRandomCocktail();
       } else {
         loadSearchedCocktail(result);
-      }      
+      }
 
     }, [result]);
 
@@ -58,11 +70,24 @@ function Cocktail({result}) {
         <ul>
           {Object.keys(cocktail).filter((key) => key.includes("strIngredient")).map((key, index) => {
             if(cocktail[key] !== null && cocktail[key] !== "") {
-              return <li key={index}>{cocktail[key]}</li>
+              return <li onClick={() => loadSearchedIngredient(cocktail[key])} key={index}>{cocktail[key]}</li>
             }
           }  
           )}
         </ul>
+        {!ingredientLoaded ?
+        null :
+        (<>
+        <button onClick={() => setIngredientLoaded(false)}>Hide</button> <br />
+        <div style={{display: "flex", flexWrap: "wrap", gap: 10 + "px"}}>
+        {ingredient.map((drink, index) => (
+          <div key={index}>
+            <h5>{drink.strDrink}</h5>
+            <img style={{width: 100 + "px"}} src={drink.strDrinkThumb} alt={"image of " + drink.strDrink} />
+          </div>
+        ))
+        }</div></>)
+        }
         </>) :
         <p>Loading</p>      
         }
