@@ -20,8 +20,8 @@ function Cocktail({result}) {
       }
 
     const loadSearchedCocktail = async (query) => {
-      const response = await fetch();
-      const data = await response.json(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`);
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${query}`);
+      const data = await response.json();
 
       // console.log(data);
 
