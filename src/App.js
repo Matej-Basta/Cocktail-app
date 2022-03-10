@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
 import Cocktail from "./components/Cocktail";
 import SearchBar from "./components/SearchBar";
 import React, {useState} from "react";

@@ -47,6 +47,7 @@ function Cocktail({result}) {
       setIngredientLoaded(true);
     } 
     
+    
     useEffect(() => {
       //if the search is empty, the random cocktail should be fetched, if there is something, the searched cocktail should be fetched
       if(result === "") {
