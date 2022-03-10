@@ -7,6 +7,7 @@ import React, {useState} from "react";
 
 function App() {
 
+  //accessing the searches and passing them down to cocktail element
   const [search, setSearch] = useState("");
   const [result, setResult] = useState("");
 
